@@ -18,5 +18,5 @@
 ### TODO:
 1. Complete README for all existing session dirs
 2. Improve main README
-3. Implement Backward pass for minigrad and add more operations. Inspiration for enhancement is GeoHotz's TinyGrad repo.
+3. Implement Backward pass for minigrad and add more operations. Inspiration for enhancements is GeoHotz's TinyGrad repo, basic idea from Andrej's repo.
 
