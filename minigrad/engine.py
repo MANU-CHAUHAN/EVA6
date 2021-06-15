@@ -124,7 +124,7 @@ class Tensor:
         return out
 
     def __repr__(self):
-        return f'Tensor(data={self.data:.2f}, grad={self.grad:.2f}), prev_op={self.prev_op})'
+        return f'Tensor(data={self.data:.2f}, grad={self.grad:.2f}), prev_op={self.previous_op})'
 
     def backward(self):
         ''' To calculate derivate of `outout` wrt to all nodes in DAG.
@@ -138,3 +138,4 @@ class Tensor:
 
         '''
         
+    
