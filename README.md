@@ -7,7 +7,7 @@
 
 1) Each session has it's own dedicated directory with a a README file, which would help to give an overview for that session.
 
-2) `minigrad` is an attempt to have a minimalistic Auto-grad engine with capability to develop full working Neural Networks. Inspired from Andrej Karpathy's micrograd. Will keep adding more operations along with features as I go along.
+2) `minigrad` is an attempt to understand and have a minimalistic Auto-grad engine with capability to develop full working Neural Networks. Inspired from Andrej Karpathy's micrograd. Will keep understanding and adding more operations along with features as I go along.
 
 3) Extra resources like images or gifs would go under resources folder
 
