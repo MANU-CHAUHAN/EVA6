@@ -1,4 +1,5 @@
-# EVA6: DAWN OF THE TRANSFORMERS
+# <p align="center">DAWN OF THE TRANSFORMERS</p>
+                                              
 
 ![](resources/2991289.png)
 
