@@ -16,9 +16,9 @@ Each convolution kernel CONVOLVES, while discretely moving, on the input using e
 
 ![](../resources/s7-3.jpeg)
 
-One of the convolution layer’s parameters in PyTorch is the *groups* parameter. This parameter controls the connections between the input and output channels.
+One of the convolution layer’s parameters in PyTorch is the `groups` parameter. This parameter controls the connections between the input and output channels.
 
-**Each channel of the output feature map of the packet convolution is only related to a part of the channel of the input feature map, and this part of the channel is a group**
+**Each channel of the output feature map of the packet convolution is only related to a part of the channels of the input feature map, and this part of the channel is a group**
 
 
 
@@ -57,4 +57,84 @@ conv = nn.Conv2d(in_channels = 8, out_channels = 4,groups=4, kernel_size = 5, bi
 #### Groups ≠ 1 and In_channels = Out_channels
 
 When the number of input and output channels are same, and the groups parameter is set to the number of channels, then each input channel is convolved separately to produce a corresponding output channels. This means a direct one to one connection is made between each input-output channel pair. When any other valid groups value is used, then that value specifies the number of input channels that will be convolved together along any path between input and output.
+
+### Why do Filter Groups Work? [[src](https://blog.yani.ai/filter-group-tutorial/)]
+
+Filter groups (AKA grouped convolution) were introduced in the now seminal [AlexNet paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks) in 2012. As explained by the authors, their primary motivation was to allow the training of the network over two Nvidia GTX 580 gpus with 1.5GB of memory each.
+
+
+
+<img src="../resources/alexnetfilters.png" style="zoom:200%;" />
+
+AlexNet `conv1` filter separation: as noted by the authors, filter groups appear to structure learned filters into two distinct groups, black-and-white and colour filters ([Alex Krizhevsky et al. 2012](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks)).
+
+
+
+What wasn’t noted explicitly in the AlexNet paper was the more important side-effect of convolutional groups, that they learn **better representations**
+
+
+
+It’s not immediately obvious that filter groups should be of any benefit, but they are often able to learn more efficient and better representations. This is because **filter relationships are sparse**.
+
+
+
+
+
+> ![](/Users/manu/Documents/workspace/github/EVA6/resources/cifar-nin-4pad-conv8-corr.png)
+>
+> ![](../resources/colorbar.svg)
+>
+> The correlation matrix between filters of adjacent layers in a Network-in-Network model trained on CIFAR10. Pairs of highly correlated filters are brighter, while lower correlated filters are darker.
+
+
+
+We can show this by looking at the correlation across filters of adjacent layers. As shown above, the correlations are generally quite low, although in a standard network there is no discernable ordering of these filter relationships, they are also different between models trained with different random initializations. What about with filter groups?
+
+
+
+>
+>
+>![](../resources/cifar-nin-groupanimation.gif)
+
+> ![](/Users/manu/Documents/workspace/github/EVA6/resources/colorbar.svg)
+>
+> The correlations between filters of adjacent layers in a Network-in-Network model trained on CIFAR10, when trained with 1, 2, 4, 8 and 16 filter groups.
+
+
+
+The effect of filter groups is to learn with a *block-diagonal* structured sparsity on the channel dimension. As can be seen in the correlation images, the filters with high correlation are learned in a more structured way in the networks with filter groups. In effect, filter relationships that don’t have to be learned are no longer parameterized. In reducing the number of parameters in the network in this salient way, it is not as easy to over-fit, and hence a regularization-like effect allows the optimizer to learn more accurate, more efficient deep networks.
+
+
+
+### Dilated Convolutions:
+
+references:
+
+1. [StackOverflow:What's the use of Dilated Convs?](https://stackoverflow.com/q/41178576/3903762)
+
+2. [Multi-scale context aggregation by Dilated Convs -> paper-2016](https://arxiv.org/abs/1511.07122)
+
+
+
+[1]
+
+1. Dilated convolutions have generally improved performance (see the better semantic segmentation results in [Multi-Scale Context Aggregation by Dilated Convolutions](https://arxiv.org/pdf/1511.07122.pdf))
+2. The more important point is that **the architecture is based on the fact that dilated convolutions support exponential expansion of the receptive field without loss of resolution or coverage**.
+3. Allows one to have **larger receptive field** with **same computation and memory costs**while also **preserving resolution**.
+4. **Pooling** and **Strided Convolutions** are similar concepts but both **reduce the resolution**. 
+
+
+
+<img src="../resources/dilated-conv-1.png" style="zoom:150%;" />
+
+- Figure (a) is a 1-dilated 3x3 convolution filter. In other words, it's a standard 3x3 convolution filter.
+- Figure (b) is a 2-dilated 3x3 convolution filter. The red dots are where the weights are and everywhere else is 0. In other words, it's a **5x5 convolution filter with 9 non-zero weights and everywhere else 0**, as mentioned in the question. The receptive field in this case is 7x7 because each unit in the previous output has a receptive field of 3x3. The highlighted portions in blue show the receptive field and **NOT** the convolution filter (you could see it as a convolution filter if you wanted to but it's not helpful).
+- Figure (c) is a 4-dilated 3x3 convolution filter. It's a **9x9 convolution filter with 9 non-zeros weights and everywhere else 0**. From (b), we have it that each unit now has a 7x7 receptive field, and hence you can see a 7x7 blue portion around each red dot.
+
+
+
+To draw an explicit contrast, consider this:
+
+- If we use 3 successive layers of 3x3 convolution filters with stride of 1, the effective receptive field will only be 7x7 at the end of it. However, with the same computation and memory costs, we can achieve 15x15 with dilated convolutions. Both operations preserve resolution.
+- If we use 3 successive layers of 3x3 convolution filters with increasing stride at an exponential rate at exactly the same rate as dilated convolutions in the paper, we will get a 15x15 receptive field at the end of it **but with loss of coverage** eventually as the stride gets larger. What this loss of coverage means is that the effective receptive field at some point will not be what we see above. Some parts will not be overlapping.
 
