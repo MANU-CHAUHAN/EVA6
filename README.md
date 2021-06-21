@@ -1,7 +1,7 @@
 # <p align="center">DAWN OF THE TRANSFORMERS</p>
                                               
 
-![](resources/2991289.png)
+![](resources/main.png)
 
 --------
 
