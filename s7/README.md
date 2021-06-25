@@ -2,7 +2,7 @@
 
 **Normal Convolution:**
 
-Each convolution kernel CONVOLVES, while discretely moving, on the input using each channel of the input feature map and then result of each convolution kernel is the sum of the convolution results of each channel. (**Note:** here each channel of the feature map is related to all channels of the input feature map)
+Each convolution kernel CONVOLVES, while moving discretely, on the input using each channel of the input feature map and result of each convolution kernel is the sum of the convolution results of each channel. (**Note:** here each channel of the feature map is related to all channels of the input feature map)
 
 <img src="../resources/s7-2.png" style="zoom:150%;" />
 
@@ -22,11 +22,11 @@ One of the convolution layer’s parameters in PyTorch is the `groups` parameter
 
 
 
+====
+
 #### Groups = 1
 
 The default value, all input channels are convolved to all outputs.
-
-
 
 #### Groups ≠ 1 and In_channels > Out_channels
 
@@ -37,7 +37,7 @@ If a `groups` value other than 1 is selected, the  value must be an integer such
 As an example, suppose we have 8 channels coming out of an intermediate convolution layer and you want to convolve them in groups to produce four output channels. In this case, non-default values of 2 and 4 are possible for the groups parameter
 
 ```python
-conv = nn.Conv2d(in_channels = 8, out_channels = 4,groups=4, kernel_size = 5, bias = False)
+conv = nn.Conv2d(in_channels = 8, out_channels = 4,groups=4)
 ```
 
 
@@ -52,13 +52,26 @@ conv = nn.Conv2d(in_channels = 8, out_channels = 4,groups=4, kernel_size = 5, bi
 
 #### Groups ≠ 1 and In_channels < Out_channels
 
-
-
 #### Groups ≠ 1 and In_channels = Out_channels
 
-When the number of input and output channels are same, and the groups parameter is set to the number of channels, then each input channel is convolved separately to produce a corresponding output channels. This means a direct one to one connection is made between each input-output channel pair. When any other valid groups value is used, then that value specifies the number of input channels that will be convolved together along any path between input and output.
+<u>When the number of input and output channels are same, and the groups parameter is set to the number of channels, then each input channel is convolved separately to produce a corresponding output channels</u>. This means a direct one to one connection is made between each input-output channel pair. When any other valid groups value is used, then that value specifies the number of input channels that will be convolved together along any path between input and output.
 
-### Why do Filter Groups Work? [[src](https://blog.yani.ai/filter-group-tutorial/)]
+====
+
+- The filter groups **force the network to learn filters with only limited dependence on previous layers.**
+- **This reduced connectivity also reduces computational complexity and model size** since the size of filters in filter groups are reduced drastically.
+
+====
+
+### NOTE: (from Deep Roots paper)
+
+Amongst the seminal contributions made by **Krizhevsky** (2012) is the use of **‘filter groups’** in the convolutional layers of a CNN. <u>**While** their use of filter groups was necessitated by the practical need to sub-divide the work of training a large network across multiple GPUs,</u> the *side effects* are somewhat surprising. **Specifically, the authors observe that independent filter groups learn a separation of responsibility (colour features vs. texture features) that is consistent over different random initializations.** Also surprising, and not explicitly stated in original Krizhevsky's work, is the fact that the AlexNet network has ap- proximately 57% fewer connection weights than the corre- sponding network without filter groups. Despite the large differ- ence in the number of parameters between the models, both achieve comparable accuracy on ILSVRC – in fact the smaller grouped network gets ≈ 1% lower top-5 validation error.
+
+##### Learning a basis for filter dependencies:
+
+
+
+### Why do Filter Groups Work? [[blog](https://blog.yani.ai/filter-group-tutorial/)]
 
 Filter groups (AKA grouped convolution) were introduced in the now seminal [AlexNet paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks) in 2012. As explained by the authors, their primary motivation was to allow the training of the network over two Nvidia GTX 580 gpus with 1.5GB of memory each.
 
