@@ -4,6 +4,8 @@
  2) 95K parameters and 85% + val accuracy experiment 1: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95_9K_params_separate_exp_2_85_crossed.ipynb)
  3) 95K parameters and 85% + val accuracy experiment 2: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95K_params_separate_exp_3_complete_more_than_85_.ipynb) 
 
+(used very low lR for start for exp for 95K runs)
+
 95 K param acc and loss graphs:
 
 ![](exp3.png)
