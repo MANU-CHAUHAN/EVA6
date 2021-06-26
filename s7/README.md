@@ -6,9 +6,9 @@
 
 95 K param acc and loss graphs:
 
-![](/Users/manu/Documents/workspace/github/EVA6/s7/exp3.png)
+![](exp3.png)
 
-<img src="/Users/manu/Documents/workspace/github/EVA6/s7/exp2.png" style="zoom:150%;" />
+![](exp2.png)
 
 
 
