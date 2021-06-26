@@ -4,7 +4,16 @@
  2) 95K parameters and 85% + val accuracy experiment 1: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95_9K_params_separate_exp_2_85_crossed.ipynb)
  3) 95K parameters and 85% + val accuracy experiment 2: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95K_params_separate_exp_3_complete_more_than_85_.ipynb) 
 
+95 K param acc and loss graphs:
+
+![](/Users/manu/Documents/workspace/github/EVA6/s7/exp3.png)
+
+<img src="/Users/manu/Documents/workspace/github/EVA6/s7/exp2.png" style="zoom:150%;" />
+
+
+
 # Notes:
+
 **Normal Convolution:**
 
 Each convolution kernel CONVOLVES, while moving discretely, on the input using each channel of the input feature map and result of each convolution kernel is the sum of the convolution results of each channel. (**Note:** here each channel of the feature map is related to all channels of the input feature map)
