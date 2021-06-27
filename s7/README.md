@@ -1,8 +1,8 @@
 
 # Experiments/model runs:
- 1) All less than 200K params trials and 85%+ model: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_All_trials_%2B_last_model_with_85%2B_acc.ipynb)
- 2) 95K parameters and 85% + val accuracy experiment 1: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95_9K_params_separate_exp_2_85_crossed.ipynb)
- 3) 95K parameters and 85% + val accuracy experiment 2: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95K_params_separate_exp_3_complete_more_than_85_.ipynb) 
+ 1) All less than 200K params trials and more than 85% model: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_All_trials_%2B_last_model_with_85%2B_acc.ipynb)
+ 2) 95K parameters and more than 85% val accuracy: experiment 1: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95_9K_params_separate_exp_2_85_crossed.ipynb)
+ 3) 95K parameters and more than 85% val accuracy: experiment 2: [notebook](https://github.com/MANU-CHAUHAN/topgun/blob/main/s7/EVA_6_S7_95K_params_separate_exp_3_complete_more_than_85_.ipynb) 
 
 (used very low LR for start for exp for 95K runs)
 
