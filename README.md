@@ -15,7 +15,7 @@
 
 4) Experiments will hold notebooks for sometimes session based tests or something different, but will revolve around CV.
 
-
+#### VisionX: The main source for structured and modularised code, for ease of use and out of the box experimentation, work in progress
 
 ### TODO:
 1. Complete README for all existing session dirs
